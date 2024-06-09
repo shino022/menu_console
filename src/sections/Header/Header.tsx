@@ -1,6 +1,8 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ThemeIcon from '@mui/icons-material/InvertColors';
 import MenuIcon from '@mui/icons-material/Menu';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,6 +17,7 @@ import useHotKeysDialog from '@/store/hotkeys';
 import useNotifications from '@/store/notifications';
 import useSidebar from '@/store/sidebar';
 import useTheme from '@/store/theme';
+import { useAuth } from '@/store/auth';
 
 import { HotKeysButton } from './styled';
 import { getRandomJoke } from './utils';
@@ -24,6 +27,7 @@ function Header() {
   const [theme, themeActions] = useTheme();
   const [, notificationsActions] = useNotifications();
   const [, hotKeysDialogActions] = useHotKeysDialog();
+  const [auth, authActions] = useAuth();
 
   function showNotification() {
     notificationsActions.push({
@@ -91,16 +95,29 @@ function Header() {
               </IconButton>
             </Tooltip>
             <Divider orientation="vertical" flexItem />
-            <Tooltip title="Login" arrow>
+            
+            {auth.user?
+            <Tooltip title="Logout" arrow>
+            <IconButton
+              color="info"
+              edge="end"
+              size="large"
+              onClick={() => {console.log("logout")}}
+            >
+              <LogoutIcon />
+            </IconButton>
+          </Tooltip>:
+          <Tooltip title="Login" arrow>
               <IconButton
                 color="info"
                 edge="end"
                 size="large"
-                onClick={themeActions.toggle}
+                onClick={() => {authActions.login('guest@menuconsole.com', '1234qwer!Q')}}
               >
-                <ThemeIcon />
+                <LoginIcon />
               </IconButton>
             </Tooltip>
+            }
           </FlexBox>
         </Toolbar>
       </AppBar>
