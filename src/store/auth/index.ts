@@ -29,7 +29,7 @@ export const useAuthenticateUser = () => {
 
     const client = new CognitoIdentityProviderClient({ region: authConfig.region });
     const input: InitiateAuthCommandInput = {
-      AuthFlow: 'USER_PASSWORD_AUTH',
+      AuthFlow: authConfig.AuthFlow,
       AuthParameters: {
         USERNAME: username,
         PASSWORD: password,
@@ -61,5 +61,5 @@ export const useAuthenticateUser = () => {
     }
   };
 
-  return {auth, authenticateUser};
+  return { auth, authenticateUser };
 };
