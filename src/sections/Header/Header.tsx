@@ -90,6 +90,17 @@ function Header() {
                 <ThemeIcon />
               </IconButton>
             </Tooltip>
+            <Divider orientation="vertical" flexItem />
+            <Tooltip title="Login" arrow>
+              <IconButton
+                color="info"
+                edge="end"
+                size="large"
+                onClick={themeActions.toggle}
+              >
+                <ThemeIcon />
+              </IconButton>
+            </Tooltip>
           </FlexBox>
         </Toolbar>
       </AppBar>

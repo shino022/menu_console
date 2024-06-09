@@ -5,14 +5,15 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import authConfig from '../../config/auth'; // Assuming auth configuration is stored here
 import { atom, useRecoilState } from 'recoil';
+import type { Actions } from './types';
 
-type AuthState = {
+type Auth = {
   user: string | undefined;
   isLoading: boolean;
   error: string | undefined;
   token: string | undefined;
 };
-const authState = atom<AuthState>({
+const authState = atom<Auth>({
   key: 'authState',
   default: {
     user: undefined,
@@ -22,10 +23,10 @@ const authState = atom<AuthState>({
   },
 });
 
-export const useAuthenticateUser = () => {
+export const useAuth = (): [Auth, Actions] => {
   const [auth, setAuth] = useRecoilState(authState);
-  const authenticateUser = async (username: string, password: string) => {
-    setAuth((prevState: AuthState) => ({ ...prevState, isLoading: true, error: undefined }));
+  const login = async (username: string, password: string) => {
+    setAuth((prevState: Auth) => ({ ...prevState, isLoading: true, error: undefined }));
 
     const client = new CognitoIdentityProviderClient({ region: authConfig.region });
     const input: InitiateAuthCommandInput = {
@@ -40,7 +41,7 @@ export const useAuthenticateUser = () => {
 
     try {
       const response = await client.send(command);
-      setAuth((prevState: AuthState) => ({
+      setAuth((prevState: Auth) => ({
         ...prevState,
         user: response.AuthenticationResult?.IdToken, // Simplified assumption
         token: response.AuthenticationResult?.IdToken,
@@ -52,7 +53,7 @@ export const useAuthenticateUser = () => {
         // Checks if it's an Error object
         message = error.message;
       }
-      setAuth((prevState: AuthState) => ({
+      setAuth((prevState: Auth) => ({
         ...prevState,
         isLoading: false,
         error: message,
@@ -61,5 +62,5 @@ export const useAuthenticateUser = () => {
     }
   };
 
-  return { auth, authenticateUser };
+  return [auth, { login }];
 };
