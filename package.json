@@ -3,18 +3,9 @@
   "version": "2.3.0",
   "type": "module",
   "description": "Starter kit for modern web applications",
-  "homepage": "https://react-pwa.surenatoyan.com/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/suren-atoyan/react-pwa.git"
-  },
-  "bugs": {
-    "url": "https://github.com/suren-atoyan/react-pwa/issues",
-    "email": "contact@surenatoyan.com"
-  },
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "https-preview": "serve dist",
@@ -27,6 +18,7 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.592.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.0",
@@ -72,11 +64,6 @@
     "src/**/*.{js,jsx,ts,tsx,json}": [
       "eslint --max-warnings=0"
     ]
-  },
-  "author": {
-    "name": "Suren Atoyan",
-    "email": "contact@surenatoyan.com",
-    "url": "http://surenatoyan.com/"
   },
   "keywords": [
     "react",

@@ -1,1 +1,1 @@
-Bootstrapped with vite
+Bootstrapped with Vite Community Template
