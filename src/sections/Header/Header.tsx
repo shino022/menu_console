@@ -102,7 +102,7 @@ function Header() {
               color="info"
               edge="end"
               size="large"
-              onClick={() => {console.log("logout")}}
+              onClick={() => {authActions.logout()}}
             >
               <LogoutIcon />
             </IconButton>

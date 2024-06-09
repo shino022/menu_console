@@ -25,6 +25,7 @@ const authState = atom<Auth>({
 
 export const useAuth = (): [Auth, Actions] => {
   const [auth, setAuth] = useRecoilState(authState);
+  
   const login = async (username: string, password: string) => {
     setAuth((prevState: Auth) => ({ ...prevState, isLoading: true, error: undefined }));
 
@@ -62,5 +63,13 @@ export const useAuth = (): [Auth, Actions] => {
     }
   };
 
-  return [auth, { login }];
+  const logout = () => {
+    setAuth((prevState: Auth) => ({
+      ...prevState,
+      user: undefined,
+      token: undefined,
+    }));
+  }
+
+  return [auth, { login, logout }];
 };
